@@ -4,12 +4,12 @@ import java.util.Calendar;
 
 public interface Event {
 
-  boolean isActive(Calendar now);
+    boolean isActive(Calendar now);
 
-  long getTimeToStart(Calendar now);
+    long getTimeToStart(Calendar now);
 
-  void calculate(Calendar now);
+    void calculate(Calendar now);
 
-  void run(Calendar now);
+    void run(Calendar now);
 
 }

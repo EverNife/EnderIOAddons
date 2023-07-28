@@ -1,10 +1,9 @@
 package info.loenwind.enderioaddons.gui;
 
-
 public interface IAdvancedRedstoneModeControlable {
 
-  AdvancedRedstoneMode getAdvancedRedstoneControlMode();
+    AdvancedRedstoneMode getAdvancedRedstoneControlMode();
 
-  void setAdvancedRedstoneControlMode(AdvancedRedstoneMode mode);
+    void setAdvancedRedstoneControlMode(AdvancedRedstoneMode mode);
 
 }

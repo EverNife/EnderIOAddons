@@ -1,14 +1,14 @@
 package info.loenwind.autosave.annotations;
 
-import info.loenwind.autosave.IHandler;
-import info.loenwind.autosave.Reader;
-import info.loenwind.autosave.Writer;
-import info.loenwind.autosave.handlers.internal.HandleStorable;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+
+import info.loenwind.autosave.IHandler;
+import info.loenwind.autosave.Reader;
+import info.loenwind.autosave.Writer;
+import info.loenwind.autosave.handlers.internal.HandleStorable;
 
 /**
  * Marks a class to be stored in NBT. If a special handler is given, it will be
@@ -33,6 +33,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface Storable {
 
-  public Class<? extends IHandler> handler() default HandleStorable.class;
+    public Class<? extends IHandler> handler() default HandleStorable.class;
 
 }

@@ -19,40 +19,42 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class FluidRendererNiard extends TileEntitySpecialRenderer {
 
-  @Override
-  public void renderTileEntityAt(TileEntity te, double x, double y, double z, float partialTick) {
-    renderTankFluid((TileNiard) te, (float) x, (float) y, (float) z);
-  }
-
-  public static void renderTankFluid(@Nullable TileNiard niard, float x, float y, float z) {
-    if (niard == null || niard.tank.getFluid() == null || niard.tank.getFluidAmount() <= 0) {
-      return;
-    }
-    IIcon icon_fluid = niard.tank.getFluid().getFluid().getStillIcon();
-    if (icon_fluid == null) {
-      return;
+    @Override
+    public void renderTileEntityAt(TileEntity te, double x, double y, double z, float partialTick) {
+        renderTankFluid((TileNiard) te, (float) x, (float) y, (float) z);
     }
 
-    float wscale = 0.98f;
-    float yScale = 6 / 16f * niard.tank.getFilledRatio();
-    BoundingBox bb = BoundingBox.UNIT_CUBE.scale(wscale, yScale, wscale);
-    bb = bb.translate(0, -(1 - yScale) / 2 + 0.01f, 0);
+    public static void renderTankFluid(@Nullable TileNiard niard, float x, float y, float z) {
+        if (niard == null || niard.tank.getFluid() == null || niard.tank.getFluidAmount() <= 0) {
+            return;
+        }
+        IIcon icon_fluid = niard.tank.getFluid()
+            .getFluid()
+            .getStillIcon();
+        if (icon_fluid == null) {
+            return;
+        }
 
-    GL11.glPushAttrib(GL11.GL_ENABLE_BIT);
-    GL11.glEnable(GL11.GL_CULL_FACE);
-    GL11.glDisable(GL11.GL_LIGHTING);
-    GL11.glEnable(GL11.GL_BLEND);
-    GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        float wscale = 0.98f;
+        float yScale = 6 / 16f * niard.tank.getFilledRatio();
+        BoundingBox bb = BoundingBox.UNIT_CUBE.scale(wscale, yScale, wscale);
+        bb = bb.translate(0, -(1 - yScale) / 2 + 0.01f, 0);
 
-    RenderUtil.bindBlockTexture();
+        GL11.glPushAttrib(GL11.GL_ENABLE_BIT);
+        GL11.glEnable(GL11.GL_CULL_FACE);
+        GL11.glDisable(GL11.GL_LIGHTING);
+        GL11.glEnable(GL11.GL_BLEND);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
-    Tessellator.instance.startDrawingQuads();
-    Tessellator.instance.addTranslation(x, y, z);
-    CubeRenderer.render(bb, icon_fluid);
-    Tessellator.instance.addTranslation(-x, -y, -z);
-    Tessellator.instance.draw();
+        RenderUtil.bindBlockTexture();
 
-    GL11.glPopAttrib();
-  }
+        Tessellator.instance.startDrawingQuads();
+        Tessellator.instance.addTranslation(x, y, z);
+        CubeRenderer.render(bb, icon_fluid);
+        Tessellator.instance.addTranslation(-x, -y, -z);
+        Tessellator.instance.draw();
+
+        GL11.glPopAttrib();
+    }
 
 }

@@ -1,5 +1,13 @@
 package info.loenwind.enderioaddons.proxy;
 
+import net.minecraft.item.Item;
+import net.minecraftforge.client.MinecraftForgeClient;
+
+import cpw.mods.fml.client.registry.ClientRegistry;
+import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import info.loenwind.enderioaddons.machine.afarm.AgriDetector;
 import info.loenwind.enderioaddons.machine.afarm.BlockAfarm;
 import info.loenwind.enderioaddons.machine.afarm.ItemRendererAfarm;
@@ -56,94 +64,97 @@ import info.loenwind.enderioaddons.machine.voidtank.TileVoidTank;
 import info.loenwind.enderioaddons.machine.waterworks.BlockWaterworks;
 import info.loenwind.enderioaddons.machine.waterworks.RendererWaterworks;
 import info.loenwind.enderioaddons.machine.waterworks.TileWaterworks;
-import net.minecraft.item.Item;
-import net.minecraftforge.client.MinecraftForgeClient;
-import cpw.mods.fml.client.registry.ClientRegistry;
-import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
 public class ClientOnlyProxy extends ClientAndServerProxy {
 
-  @Override
-  public void init(FMLPreInitializationEvent event) {
-    super.init(event);
-  }
-
-  @Override
-  public void init(FMLInitializationEvent event) {
-    super.init(event);
-
-    BlockDrain.blockDrain.localRenderId = RenderingRegistry.getNextAvailableRenderId();
-    RenderingRegistry.registerBlockHandler(new DrainBlockRenderer());
-    ClientRegistry.bindTileEntitySpecialRenderer(TileDrain.class, new DrainFluidRenderer());
-    MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(BlockDrain.blockDrain), new DrainItemRenderer());
-
-    BlockNiard.blockNiard.localRenderId = RenderingRegistry.getNextAvailableRenderId();
-    RenderingRegistry.registerBlockHandler(new BlockRendererNiard());
-    ClientRegistry.bindTileEntitySpecialRenderer(TileNiard.class, new FluidRendererNiard());
-    MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(BlockNiard.blockNiard), new ItemRendererNiard());
-
-    BlockVoidTank.blockVoidTank.localRenderId = RenderingRegistry.getNextAvailableRenderId();
-    RenderingRegistry.registerBlockHandler(new RendererVoidTank());
-    ClientRegistry.bindTileEntitySpecialRenderer(TileVoidTank.class, new FluidRendererVoidTank());
-    MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(BlockVoidTank.blockVoidTank), new ItemRendererVoidTank());
-
-    BlockPMon.blockPMon.localRenderId = RenderingRegistry.getNextAvailableRenderId();
-    RenderingRegistry.registerBlockHandler(new RendererPMon());
-    ClientRegistry.bindTileEntitySpecialRenderer(TilePMon.class, new TESRPMon());
-    MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(BlockPMon.blockPMon), new ItemRendererPMon());
-
-    RendererFrameworkMachine rendererFrameworkMachine = new RendererFrameworkMachine();
-    ItemRendererFramework itemRendererFramework = new ItemRendererFramework(rendererFrameworkMachine);
-
-    BlockCobbleworks.blockCobbleworks.localRenderId = RenderingRegistry.getNextAvailableRenderId();
-    RenderingRegistry.registerBlockHandler(new RendererCobbleworks(rendererFrameworkMachine));
-    ClientRegistry.bindTileEntitySpecialRenderer(TileCobbleworks.class, new TESRFrameworkMachine());
-    MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(BlockCobbleworks.blockCobbleworks), itemRendererFramework);
-
-    BlockWaterworks.blockWaterworks.localRenderId = RenderingRegistry.getNextAvailableRenderId();
-    RenderingRegistry.registerBlockHandler(new RendererWaterworks(rendererFrameworkMachine));
-    ClientRegistry.bindTileEntitySpecialRenderer(TileWaterworks.class, new TESRFrameworkMachine());
-    MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(BlockWaterworks.blockWaterworks), itemRendererFramework);
-
-    BlockIHopper.blockIHopper.localRenderId = RenderingRegistry.getNextAvailableRenderId();
-    RenderingRegistry.registerBlockHandler(new RendererIHopper(rendererFrameworkMachine));
-    ClientRegistry.bindTileEntitySpecialRenderer(TileIHopper.class, new TESRFrameworkMachine());
-    MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(BlockIHopper.blockIHopper), itemRendererFramework);
-
-    BlockTcom.blockTcom.localRenderId = RenderingRegistry.getNextAvailableRenderId();
-    final RendererTcom rendererTcom = new RendererTcom(rendererFrameworkMachine);
-    RenderingRegistry.registerBlockHandler(rendererTcom);
-    ClientRegistry.bindTileEntitySpecialRenderer(TileTcom.class, new TESRTcom(rendererTcom));
-    MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(BlockTcom.blockTcom), itemRendererFramework);
-
-    MinecraftForgeClient.registerItemRenderer(ItemMachinePart.itemMachinePart, new MachinePartRenderer(rendererFrameworkMachine));
-
-    ClientRegistry.bindTileEntitySpecialRenderer(TileFlag.class, new TESRFlag());
-    MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(BlockFlag.blockFlag), new ItemRendererFlag());
-
-    BlockMagCharger.blockMagCharger.localRenderId = RenderingRegistry.getNextAvailableRenderId();
-    RenderingRegistry.registerBlockHandler(new RendererMagCharger());
-    ClientRegistry.bindTileEntitySpecialRenderer(TileMagCharger.class, new TESRMagCharger());
-    MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(BlockMagCharger.blockMagCharger), new ItemRendererMagCharger());
-
-    if (AgriDetector.hasAgri) {
-      BlockAfarm.blockAfarm.localRenderId = RenderingRegistry.getNextAvailableRenderId();
-      RenderingRegistry.registerBlockHandler(new RendererAfarm());
-      ClientRegistry.bindTileEntitySpecialRenderer(TileAfarm.class, new TESRAfarm());
-      MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(BlockAfarm.blockAfarm), new ItemRendererAfarm());
+    @Override
+    public void init(FMLPreInitializationEvent event) {
+        super.init(event);
     }
 
-    BlockChassis.blockChassis.localRenderId = RenderingRegistry.getNextAvailableRenderId();
-    RenderingRegistry.registerBlockHandler(new RendererChassis());
-    MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(BlockChassis.blockChassis), new ItemRendererChassis());
-  }
+    @Override
+    public void init(FMLInitializationEvent event) {
+        super.init(event);
 
-  @Override
-  public void init(FMLPostInitializationEvent event) {
-    super.init(event);
-  }
+        BlockDrain.blockDrain.localRenderId = RenderingRegistry.getNextAvailableRenderId();
+        RenderingRegistry.registerBlockHandler(new DrainBlockRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileDrain.class, new DrainFluidRenderer());
+        MinecraftForgeClient
+            .registerItemRenderer(Item.getItemFromBlock(BlockDrain.blockDrain), new DrainItemRenderer());
+
+        BlockNiard.blockNiard.localRenderId = RenderingRegistry.getNextAvailableRenderId();
+        RenderingRegistry.registerBlockHandler(new BlockRendererNiard());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileNiard.class, new FluidRendererNiard());
+        MinecraftForgeClient
+            .registerItemRenderer(Item.getItemFromBlock(BlockNiard.blockNiard), new ItemRendererNiard());
+
+        BlockVoidTank.blockVoidTank.localRenderId = RenderingRegistry.getNextAvailableRenderId();
+        RenderingRegistry.registerBlockHandler(new RendererVoidTank());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileVoidTank.class, new FluidRendererVoidTank());
+        MinecraftForgeClient
+            .registerItemRenderer(Item.getItemFromBlock(BlockVoidTank.blockVoidTank), new ItemRendererVoidTank());
+
+        BlockPMon.blockPMon.localRenderId = RenderingRegistry.getNextAvailableRenderId();
+        RenderingRegistry.registerBlockHandler(new RendererPMon());
+        ClientRegistry.bindTileEntitySpecialRenderer(TilePMon.class, new TESRPMon());
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(BlockPMon.blockPMon), new ItemRendererPMon());
+
+        RendererFrameworkMachine rendererFrameworkMachine = new RendererFrameworkMachine();
+        ItemRendererFramework itemRendererFramework = new ItemRendererFramework(rendererFrameworkMachine);
+
+        BlockCobbleworks.blockCobbleworks.localRenderId = RenderingRegistry.getNextAvailableRenderId();
+        RenderingRegistry.registerBlockHandler(new RendererCobbleworks(rendererFrameworkMachine));
+        ClientRegistry.bindTileEntitySpecialRenderer(TileCobbleworks.class, new TESRFrameworkMachine());
+        MinecraftForgeClient
+            .registerItemRenderer(Item.getItemFromBlock(BlockCobbleworks.blockCobbleworks), itemRendererFramework);
+
+        BlockWaterworks.blockWaterworks.localRenderId = RenderingRegistry.getNextAvailableRenderId();
+        RenderingRegistry.registerBlockHandler(new RendererWaterworks(rendererFrameworkMachine));
+        ClientRegistry.bindTileEntitySpecialRenderer(TileWaterworks.class, new TESRFrameworkMachine());
+        MinecraftForgeClient
+            .registerItemRenderer(Item.getItemFromBlock(BlockWaterworks.blockWaterworks), itemRendererFramework);
+
+        BlockIHopper.blockIHopper.localRenderId = RenderingRegistry.getNextAvailableRenderId();
+        RenderingRegistry.registerBlockHandler(new RendererIHopper(rendererFrameworkMachine));
+        ClientRegistry.bindTileEntitySpecialRenderer(TileIHopper.class, new TESRFrameworkMachine());
+        MinecraftForgeClient
+            .registerItemRenderer(Item.getItemFromBlock(BlockIHopper.blockIHopper), itemRendererFramework);
+
+        BlockTcom.blockTcom.localRenderId = RenderingRegistry.getNextAvailableRenderId();
+        final RendererTcom rendererTcom = new RendererTcom(rendererFrameworkMachine);
+        RenderingRegistry.registerBlockHandler(rendererTcom);
+        ClientRegistry.bindTileEntitySpecialRenderer(TileTcom.class, new TESRTcom(rendererTcom));
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(BlockTcom.blockTcom), itemRendererFramework);
+
+        MinecraftForgeClient
+            .registerItemRenderer(ItemMachinePart.itemMachinePart, new MachinePartRenderer(rendererFrameworkMachine));
+
+        ClientRegistry.bindTileEntitySpecialRenderer(TileFlag.class, new TESRFlag());
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(BlockFlag.blockFlag), new ItemRendererFlag());
+
+        BlockMagCharger.blockMagCharger.localRenderId = RenderingRegistry.getNextAvailableRenderId();
+        RenderingRegistry.registerBlockHandler(new RendererMagCharger());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileMagCharger.class, new TESRMagCharger());
+        MinecraftForgeClient
+            .registerItemRenderer(Item.getItemFromBlock(BlockMagCharger.blockMagCharger), new ItemRendererMagCharger());
+
+        if (AgriDetector.hasAgri) {
+            BlockAfarm.blockAfarm.localRenderId = RenderingRegistry.getNextAvailableRenderId();
+            RenderingRegistry.registerBlockHandler(new RendererAfarm());
+            ClientRegistry.bindTileEntitySpecialRenderer(TileAfarm.class, new TESRAfarm());
+            MinecraftForgeClient
+                .registerItemRenderer(Item.getItemFromBlock(BlockAfarm.blockAfarm), new ItemRendererAfarm());
+        }
+
+        BlockChassis.blockChassis.localRenderId = RenderingRegistry.getNextAvailableRenderId();
+        RenderingRegistry.registerBlockHandler(new RendererChassis());
+        MinecraftForgeClient
+            .registerItemRenderer(Item.getItemFromBlock(BlockChassis.blockChassis), new ItemRendererChassis());
+    }
+
+    @Override
+    public void init(FMLPostInitializationEvent event) {
+        super.init(event);
+    }
 
 }

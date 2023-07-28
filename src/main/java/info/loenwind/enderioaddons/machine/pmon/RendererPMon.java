@@ -1,8 +1,7 @@
 package info.loenwind.enderioaddons.machine.pmon;
 
 import static info.loenwind.enderioaddons.config.Config.pMonEnableDynamicTextures;
-import info.loenwind.enderioaddons.render.FaceRenderer;
-import info.loenwind.enderioaddons.render.OverlayRenderer;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
@@ -19,77 +18,86 @@ import com.enderio.core.client.render.VertexRotationFacing;
 import com.enderio.core.common.vecmath.Vector3d;
 
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
+import info.loenwind.enderioaddons.render.FaceRenderer;
+import info.loenwind.enderioaddons.render.OverlayRenderer;
 
 public class RendererPMon implements ISimpleBlockRenderingHandler {
 
-  @Override
-  public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer) {
-  }
+    @Override
+    public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer) {}
 
-  private static BoundingBox bb0 = BoundingBox.UNIT_CUBE; // outer shell
-  private static BoundingBox bb1 = BoundingBox.UNIT_CUBE.translate(0f, 0f, -.1f); // screen
-  private static BoundingBox bbi = BoundingBox.UNIT_CUBE.scale(.99, .99, .99); // inner shell
+    private static BoundingBox bb0 = BoundingBox.UNIT_CUBE; // outer shell
+    private static BoundingBox bb1 = BoundingBox.UNIT_CUBE.translate(0f, 0f, -.1f); // screen
+    private static BoundingBox bbi = BoundingBox.UNIT_CUBE.scale(.99, .99, .99); // inner shell
 
-  private static final VertexRotationFacing xform = new VertexRotationFacing(ForgeDirection.SOUTH);
-  static {
-    xform.setCenter(new Vector3d(0.5, 0.5, 0.5));
-  }
-
-  public static void renderTileEntityAt(TilePMon te) {
-    if (te != null) {
-      xform.setRotation(te.getFacingDir());
-      te.bindTexture();
-      FaceRenderer.setupVertices(bb1, xform);
-      GL11.glColor4f(1F, 1F, 1F, 1F);
-      FaceRenderer.renderSingleFace(ForgeDirection.SOUTH, 0f, 1f, 0f, 1f, xform, FaceRenderer.stdBrightness, false);
-    } else {
-      xform.setRotation(ForgeDirection.SOUTH);
-      RenderUtil.bindBlockTexture();
-      IIcon[] icons = RenderUtil.getBlockTextures(BlockPMon.blockPMon, 0);
-      FaceRenderer.renderSingleFace(bb1, ForgeDirection.SOUTH, icons, xform, FaceRenderer.stdBrightness, false);
-    }
-  }
-
-  @Override
-  public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
-    TilePMon me = null;
-    TileEntity te = world.getTileEntity(x, y, z);
-    if (te instanceof TilePMon) {
-      me = (TilePMon) te;
-      xform.setRotation(me.getFacingDir());
+    private static final VertexRotationFacing xform = new VertexRotationFacing(ForgeDirection.SOUTH);
+    static {
+        xform.setCenter(new Vector3d(0.5, 0.5, 0.5));
     }
 
-    if (OverlayRenderer.renderOverlays(world, x, y, z, null, renderer.overrideBlockTexture, BlockPMon.blockPMon, me, true)) {
-      return true;
+    public static void renderTileEntityAt(TilePMon te) {
+        if (te != null) {
+            xform.setRotation(te.getFacingDir());
+            te.bindTexture();
+            FaceRenderer.setupVertices(bb1, xform);
+            GL11.glColor4f(1F, 1F, 1F, 1F);
+            FaceRenderer
+                .renderSingleFace(ForgeDirection.SOUTH, 0f, 1f, 0f, 1f, xform, FaceRenderer.stdBrightness, false);
+        } else {
+            xform.setRotation(ForgeDirection.SOUTH);
+            RenderUtil.bindBlockTexture();
+            IIcon[] icons = RenderUtil.getBlockTextures(BlockPMon.blockPMon, 0);
+            FaceRenderer.renderSingleFace(bb1, ForgeDirection.SOUTH, icons, xform, FaceRenderer.stdBrightness, false);
+        }
     }
 
-    FaceRenderer.setLightingReference(world, BlockPMon.blockPMon, x, y, z);
+    @Override
+    public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId,
+        RenderBlocks renderer) {
+        TilePMon me = null;
+        TileEntity te = world.getTileEntity(x, y, z);
+        if (te instanceof TilePMon) {
+            me = (TilePMon) te;
+            xform.setRotation(me.getFacingDir());
+        }
 
-    Tessellator.instance.addTranslation(x, y, z);
+        if (OverlayRenderer
+            .renderOverlays(world, x, y, z, null, renderer.overrideBlockTexture, BlockPMon.blockPMon, me, true)) {
+            return true;
+        }
 
-    IIcon[] icons = RenderUtil.getBlockTextures(BlockPMon.blockPMon, 0);
-    if (me != null && pMonEnableDynamicTextures.getBoolean()) {
-      icons[ForgeDirection.SOUTH.ordinal()] = BlockPMon.blockPMon.getIcon(ForgeDirection.SOUTH.ordinal() + 6, 0);
+        FaceRenderer.setLightingReference(world, BlockPMon.blockPMon, x, y, z);
+
+        Tessellator.instance.addTranslation(x, y, z);
+
+        IIcon[] icons = RenderUtil.getBlockTextures(BlockPMon.blockPMon, 0);
+        if (me != null && pMonEnableDynamicTextures.getBoolean()) {
+            icons[ForgeDirection.SOUTH.ordinal()] = BlockPMon.blockPMon.getIcon(ForgeDirection.SOUTH.ordinal() + 6, 0);
+        }
+        FaceRenderer.renderCube(bb0, icons, xform, FaceRenderer.stdBrightness, false);
+
+        FaceRenderer.renderCube(
+            bbi,
+            BlockPMon.blockPMon.getIcon(ForgeDirection.UP.ordinal() + 6, 0),
+            xform,
+            FaceRenderer.stdBrightnessInside,
+            true);
+
+        Tessellator.instance.addTranslation(-x, -y, -z);
+
+        FaceRenderer.clearLightingReference();
+
+        return true;
     }
-    FaceRenderer.renderCube(bb0, icons, xform, FaceRenderer.stdBrightness, false);
 
-    FaceRenderer.renderCube(bbi, BlockPMon.blockPMon.getIcon(ForgeDirection.UP.ordinal() + 6, 0), xform, FaceRenderer.stdBrightnessInside, true);
+    @Override
+    public boolean shouldRender3DInInventory(int modelId) {
+        return true;
+    }
 
-    Tessellator.instance.addTranslation(-x, -y, -z);
+    @Override
+    public int getRenderId() {
+        return BlockPMon.blockPMon.getRenderType();
+    }
 
-    FaceRenderer.clearLightingReference();
-
-    return true;
-  }
-
-  @Override
-  public boolean shouldRender3DInInventory(int modelId) {    
-    return true;
-  }
-
-  @Override
-  public int getRenderId() {
-    return BlockPMon.blockPMon.getRenderType();
-  }
-  
 }

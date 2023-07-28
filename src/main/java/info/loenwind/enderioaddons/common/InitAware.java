@@ -6,9 +6,9 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
 public interface InitAware {
 
-  void init(FMLPreInitializationEvent event);
+    void init(FMLPreInitializationEvent event);
 
-  void init(FMLInitializationEvent event);
+    void init(FMLInitializationEvent event);
 
-  void init(FMLPostInitializationEvent event);
+    void init(FMLPostInitializationEvent event);
 }

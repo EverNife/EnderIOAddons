@@ -4,6 +4,6 @@ import net.minecraft.util.IIcon;
 
 public interface ITextureProvider {
 
-  IIcon getTexture();
+    IIcon getTexture();
 
 }

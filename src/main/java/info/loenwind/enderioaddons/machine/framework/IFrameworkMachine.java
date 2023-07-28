@@ -8,25 +8,28 @@ import net.minecraftforge.fluids.Fluid;
 
 public interface IFrameworkMachine {
 
-  enum TankSlot {
-    FRONT_LEFT, FRONT_RIGHT, BACK_RIGHT, BACK_LEFT;
-  }
+    enum TankSlot {
+        FRONT_LEFT,
+        FRONT_RIGHT,
+        BACK_RIGHT,
+        BACK_LEFT;
+    }
 
-  boolean hasTank(@Nonnull TankSlot tankSlot);
+    boolean hasTank(@Nonnull TankSlot tankSlot);
 
-  @Nullable
-  Fluid getTankFluid(@Nonnull TankSlot tankSlot);
+    @Nullable
+    Fluid getTankFluid(@Nonnull TankSlot tankSlot);
 
-  boolean hasController();
+    boolean hasController();
 
-  //  Block getSlotMachine(TankSlot tankSlot);
-  //
-  //  int getSlotMachineMeta(TankSlot tankSlot);
+    // Block getSlotMachine(TankSlot tankSlot);
+    //
+    // int getSlotMachineMeta(TankSlot tankSlot);
 
-  boolean renderSlot(@Nonnull TankSlot tankSlot);
+    boolean renderSlot(@Nonnull TankSlot tankSlot);
 
-  @Nullable
-  IIcon getSlotIcon(@Nonnull TankSlot tankSlot, int side);
+    @Nullable
+    IIcon getSlotIcon(@Nonnull TankSlot tankSlot, int side);
 
-  String getControllerModelName();
+    String getControllerModelName();
 }

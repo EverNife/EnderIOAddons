@@ -4,7 +4,7 @@ import javax.annotation.Nonnull;
 
 public interface IFrameworkBlock {
 
-  @Nonnull
-  String getControllerModelName();
+    @Nonnull
+    String getControllerModelName();
 
 }

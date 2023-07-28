@@ -10,5 +10,6 @@ import cpw.mods.fml.relauncher.Side;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.FIELD, ElementType.METHOD })
 public @interface SideRestriction {
-  public Side value();
+
+    public Side value();
 }

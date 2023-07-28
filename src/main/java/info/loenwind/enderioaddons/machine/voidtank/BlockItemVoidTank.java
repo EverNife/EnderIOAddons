@@ -13,29 +13,29 @@ import crazypants.enderio.EnderIOTab;
 
 public class BlockItemVoidTank extends ItemBlockWithMetadata implements IAdvancedTooltipProvider {
 
-  public BlockItemVoidTank() {
-    this(BlockVoidTank.blockVoidTank);
-  }
+    public BlockItemVoidTank() {
+        this(BlockVoidTank.blockVoidTank);
+    }
 
-  public BlockItemVoidTank(Block block) {
-    super(block, block);
-    setHasSubtypes(false);
-    setCreativeTab(EnderIOTab.tabEnderIO);
-  }
+    public BlockItemVoidTank(Block block) {
+        super(block, block);
+        setHasSubtypes(false);
+        setCreativeTab(EnderIOTab.tabEnderIO);
+    }
 
-  @Override
-  public void addCommonEntries(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {
-    BlockVoidTank.blockVoidTank.addCommonEntries(itemstack, entityplayer, list, flag);
-  }
+    @Override
+    public void addCommonEntries(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {
+        BlockVoidTank.blockVoidTank.addCommonEntries(itemstack, entityplayer, list, flag);
+    }
 
-  @Override
-  public void addBasicEntries(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {
-    BlockVoidTank.blockVoidTank.addBasicEntries(itemstack, entityplayer, list, flag);
-  }
+    @Override
+    public void addBasicEntries(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {
+        BlockVoidTank.blockVoidTank.addBasicEntries(itemstack, entityplayer, list, flag);
+    }
 
-  @Override
-  public void addDetailedEntries(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {
-    BlockVoidTank.blockVoidTank.addDetailedEntries(itemstack, entityplayer, list, flag);
-  }
+    @Override
+    public void addDetailedEntries(ItemStack itemstack, EntityPlayer entityplayer, List list, boolean flag) {
+        BlockVoidTank.blockVoidTank.addDetailedEntries(itemstack, entityplayer, list, flag);
+    }
 
 }

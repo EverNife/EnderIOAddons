@@ -10,29 +10,30 @@ import cpw.mods.fml.common.gameevent.TickEvent.ServerTickEvent;
 
 public class Ticker {
 
-  public static final Ticker instance = new Ticker();
+    public static final Ticker instance = new Ticker();
 
-  private final Queue<Runnable> queue = new ConcurrentLinkedQueue<>();
+    private final Queue<Runnable> queue = new ConcurrentLinkedQueue<>();
 
-  private Ticker() {
-  }
+    private Ticker() {}
 
-  public static void create() {
-    FMLCommonHandler.instance().bus().register(instance);
-  }
-
-  public static void enqueue(Runnable task) {
-    instance.queue.add(task);
-  }
-
-  @SubscribeEvent
-  public void onTick(ServerTickEvent evt) {
-    if (evt.phase == Phase.END && !queue.isEmpty()) {
-      Runnable task = queue.poll();
-      if (task != null) {
-        task.run();
-      }
+    public static void create() {
+        FMLCommonHandler.instance()
+            .bus()
+            .register(instance);
     }
-  }
+
+    public static void enqueue(Runnable task) {
+        instance.queue.add(task);
+    }
+
+    @SubscribeEvent
+    public void onTick(ServerTickEvent evt) {
+        if (evt.phase == Phase.END && !queue.isEmpty()) {
+            Runnable task = queue.poll();
+            if (task != null) {
+                task.run();
+            }
+        }
+    }
 
 }

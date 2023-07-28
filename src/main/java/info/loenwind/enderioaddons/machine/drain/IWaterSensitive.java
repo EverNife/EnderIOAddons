@@ -8,6 +8,6 @@ import com.enderio.core.common.util.BlockCoord;
 
 public interface IWaterSensitive {
 
-  public boolean preventInfiniteWaterForming(@Nonnull World world, @Nonnull BlockCoord bc);
-  
+    public boolean preventInfiniteWaterForming(@Nonnull World world, @Nonnull BlockCoord bc);
+
 }

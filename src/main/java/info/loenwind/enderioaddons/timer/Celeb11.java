@@ -16,10 +16,10 @@ import com.enderio.core.common.util.BlockCoord;
 
 public class Celeb11 implements Event, Runnable {
 
-  public static void create() {
-    Calendar cal = Calendar.getInstance(Locale.getDefault());
-    if ((cal.get(Calendar.MONTH) == Calendar.DECEMBER && cal.get(Calendar.DAY_OF_MONTH) > 15)
-        || (cal.get(Calendar.MONTH) == Calendar.JANUARY && cal.get(Calendar.DAY_OF_MONTH) < 3)) {
+    public static void create() {
+        Calendar cal = Calendar.getInstance(Locale.getDefault());
+        if ((cal.get(Calendar.MONTH) == Calendar.DECEMBER && cal.get(Calendar.DAY_OF_MONTH) > 15)
+            || (cal.get(Calendar.MONTH) == Calendar.JANUARY && cal.get(Calendar.DAY_OF_MONTH) < 3)) {
       //@formatter:off
       Scheduler.instance.registerEvent(new Celeb11("UTC+14:00", "Samoa", "Christmas Island", "Kiritimati", "Apia", "Salelologa"));
       Scheduler.instance.registerEvent(new Celeb11("UTC+13:45", "Chatham Islands"));
@@ -63,87 +63,94 @@ public class Celeb11 implements Event, Runnable {
       Scheduler.instance.registerEvent(new Celeb11("UTC-11:00", "Pago Pago", "Niue", "Midway Islands", "Jarvis Isl.", "Kingman Reef", "Palmyra Atoll", "Alofi"));
       Scheduler.instance.registerEvent(new Celeb11("UTC-12:00", "Baker Island", "Howland Island"));
       //@formatter:on
+        }
     }
-  }
 
-  private final Calendar start;
-  private final Calendar end;
-  private final List<String> locations;
-  private int chatted = 0;
+    private final Calendar start;
+    private final Calendar end;
+    private final List<String> locations;
+    private int chatted = 0;
 
-  public Celeb11(String timezone, String... locations) {
-    String javatimezone = timezone.replace("UTC", "GMT");
-    start = Calendar.getInstance(TimeZone.getTimeZone(javatimezone));
-    start.set(2015, 0, 1, 0, 0, 0);
-    end = Calendar.getInstance(TimeZone.getTimeZone(javatimezone));
-    end.set(2015, 0, 1, 0, 1, 0);
-    this.locations = Arrays.asList(locations);
-    Collections.shuffle(this.locations);
-  }
+    public Celeb11(String timezone, String... locations) {
+        String javatimezone = timezone.replace("UTC", "GMT");
+        start = Calendar.getInstance(TimeZone.getTimeZone(javatimezone));
+        start.set(2015, 0, 1, 0, 0, 0);
+        end = Calendar.getInstance(TimeZone.getTimeZone(javatimezone));
+        end.set(2015, 0, 1, 0, 1, 0);
+        this.locations = Arrays.asList(locations);
+        Collections.shuffle(this.locations);
+    }
 
-  @Override
-  public boolean isActive(Calendar now) {
-    if (start.before(now)) {
-      if (end.before(now)) {
-        calculate(now);
+    @Override
+    public boolean isActive(Calendar now) {
+        if (start.before(now)) {
+            if (end.before(now)) {
+                calculate(now);
+                return false;
+            }
+            return true;
+        }
         return false;
-      }
-      return true;
     }
-    return false;
-  }
 
-  @Override
-  public long getTimeToStart(Calendar now) {
-    long remaining = start.getTimeInMillis() - now.getTimeInMillis();
-    return remaining < 0 ? 0 : remaining;
-  }
-
-  @Override
-  public void calculate(Calendar now) {
-    while (end.before(now)) {
-      start.add(Calendar.YEAR, 1);
-      end.add(Calendar.YEAR, 1);
+    @Override
+    public long getTimeToStart(Calendar now) {
+        long remaining = start.getTimeInMillis() - now.getTimeInMillis();
+        return remaining < 0 ? 0 : remaining;
     }
-  }
 
-  @Override
-  public void run(Calendar now) {
-    Ticker.instance.enqueue(this);
-  }
-
-  private static Random rand = new Random();
-
-  @Override
-  public void run() {
-    if (MinecraftServer.getServer() == null || MinecraftServer.getServer().getConfigurationManager() == null
-        || MinecraftServer.getServer().getConfigurationManager().playerEntityList == null) {
-      return;
-    }
-    int count = chatted % 10;
-    for (EntityPlayerMP player : (List<EntityPlayerMP>) MinecraftServer.getServer().getConfigurationManager().playerEntityList) {
-      if (player != null && player.worldObj != null) {
-        for (int i = rand.nextInt(10) + 1; i > 0; i--) {
-          int x = (int) Math.floor(player.posX) - 32 + rand.nextInt(64);
-          int z = (int) Math.floor(player.posZ) - 32 + rand.nextInt(64);
-          int y = player.worldObj.getTopSolidOrLiquidBlock(x, z) + rand.nextInt(32);
-          if (y <= 254) {
-            BlockCoord pos = new BlockCoord(x, y, z);
-            player.worldObj.spawnEntityInWorld(com.enderio.core.common.util.EntityUtil.getRandomFirework(player.worldObj, pos));
-          }
+    @Override
+    public void calculate(Calendar now) {
+        while (end.before(now)) {
+            start.add(Calendar.YEAR, 1);
+            end.add(Calendar.YEAR, 1);
         }
-        if (count * 10 == chatted && count < locations.size()) {
-          player.addChatMessage(new ChatComponentText("Say \"Happy New Year\" to " + locations.get(count)));
-        }
-      }
     }
-    chatted++;
-  }
 
-  @Override
-  public String toString() {
-    final int maxLen = 10;
-    return "Celeb11 [start=" + start + ", locations=" + (locations != null ? locations.subList(0, Math.min(locations.size(), maxLen)) : null) + "]";
-  }
+    @Override
+    public void run(Calendar now) {
+        Ticker.instance.enqueue(this);
+    }
+
+    private static Random rand = new Random();
+
+    @Override
+    public void run() {
+        if (MinecraftServer.getServer() == null || MinecraftServer.getServer()
+            .getConfigurationManager() == null
+            || MinecraftServer.getServer()
+                .getConfigurationManager().playerEntityList == null) {
+            return;
+        }
+        int count = chatted % 10;
+        for (EntityPlayerMP player : (List<EntityPlayerMP>) MinecraftServer.getServer()
+            .getConfigurationManager().playerEntityList) {
+            if (player != null && player.worldObj != null) {
+                for (int i = rand.nextInt(10) + 1; i > 0; i--) {
+                    int x = (int) Math.floor(player.posX) - 32 + rand.nextInt(64);
+                    int z = (int) Math.floor(player.posZ) - 32 + rand.nextInt(64);
+                    int y = player.worldObj.getTopSolidOrLiquidBlock(x, z) + rand.nextInt(32);
+                    if (y <= 254) {
+                        BlockCoord pos = new BlockCoord(x, y, z);
+                        player.worldObj.spawnEntityInWorld(
+                            com.enderio.core.common.util.EntityUtil.getRandomFirework(player.worldObj, pos));
+                    }
+                }
+                if (count * 10 == chatted && count < locations.size()) {
+                    player.addChatMessage(new ChatComponentText("Say \"Happy New Year\" to " + locations.get(count)));
+                }
+            }
+        }
+        chatted++;
+    }
+
+    @Override
+    public String toString() {
+        final int maxLen = 10;
+        return "Celeb11 [start=" + start
+            + ", locations="
+            + (locations != null ? locations.subList(0, Math.min(locations.size(), maxLen)) : null)
+            + "]";
+    }
 
 }

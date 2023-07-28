@@ -1,19 +1,20 @@
-[
 {
-  "modid": "enderioaddons",
-  "name": "Ender IO Addons",
-  "description": "Additional machines for Ender IO.",
-  "version": "${version}",
-  "mcversion": "${mcversion}",
-  "url": "http://enderioaddons.loenwind.info",
-  "updateUrl": "",
-  "authorList": [ "HenryLoenwind" ],
-  "credits": "Thx to CrazyPants for Ender IO",
-  "logoFile": "",
-  "screenshots": [
-  ],
-  "parent":"",
-  "dependencies": [
-  ]
+  "modListVersion": 2,
+  "modList": [{
+    "modid": "${modId}",
+    "name": "${modName}",
+    "description": "Additional machines for Ender IO.",
+    "version": "${modVersion}",
+    "mcversion": "${minecraftVersion}",
+    "url": "http://enderioaddons.loenwind.info",
+    "updateUrl": "",
+    "authorList": [ "HenryLoenwind", "Cleptomania" ],
+    "credits": "Thx to CrazyPants for Ender IO",
+    "logoFile": "",
+    "screenshots": [
+    ],
+    "parent":"",
+    "dependencies": [
+    ]
+  }]
 }
-]

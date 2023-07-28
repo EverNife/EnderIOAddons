@@ -1,10 +1,5 @@
 package info.loenwind.autosave.handlers.minecraft;
 
-import info.loenwind.autosave.IHandler;
-import info.loenwind.autosave.Registry;
-import info.loenwind.autosave.annotations.Store.StoreFor;
-import info.loenwind.autosave.exceptions.NoHandlerFoundException;
-
 import java.util.Set;
 
 import javax.annotation.Nonnull;
@@ -14,32 +9,39 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
+import info.loenwind.autosave.IHandler;
+import info.loenwind.autosave.Registry;
+import info.loenwind.autosave.annotations.Store.StoreFor;
+import info.loenwind.autosave.exceptions.NoHandlerFoundException;
+
 public class HandleItem implements IHandler<Item> {
 
-  public HandleItem() {
-  }
+    public HandleItem() {}
 
-  @Override
-  public boolean canHandle(Class<?> clazz) {
-    return ItemStack.class.isAssignableFrom(clazz);
-  }
-
-  // Note: We can use the item ID here because ItemStack also uses it in its NBT-methods. So if the ID breaks, ItemStacks break even harder than we do here. 
-
-  @Override
-  public boolean store(@Nonnull Registry registry, @Nonnull Set<StoreFor> phase, @Nonnull NBTTagCompound nbt, @Nonnull String name, @Nonnull Item object)
-      throws IllegalArgumentException, IllegalAccessException, InstantiationException, NoHandlerFoundException {
-    nbt.setShort(name, (short) Item.getIdFromItem(object));
-    return true;
-  }
-
-  @Override
-  public Item read(@Nonnull Registry registry, @Nonnull Set<StoreFor> phase, @Nonnull NBTTagCompound nbt, @Nonnull String name, @Nullable Item object)
-      throws IllegalArgumentException, IllegalAccessException, InstantiationException, NoHandlerFoundException {
-    if (nbt.hasKey(name)) {
-      return Item.getItemById(nbt.getShort(name));
+    @Override
+    public boolean canHandle(Class<?> clazz) {
+        return ItemStack.class.isAssignableFrom(clazz);
     }
-    return object;
-  }
+
+    // Note: We can use the item ID here because ItemStack also uses it in its NBT-methods. So if the ID breaks,
+    // ItemStacks break even harder than we do here.
+
+    @Override
+    public boolean store(@Nonnull Registry registry, @Nonnull Set<StoreFor> phase, @Nonnull NBTTagCompound nbt,
+        @Nonnull String name, @Nonnull Item object)
+        throws IllegalArgumentException, IllegalAccessException, InstantiationException, NoHandlerFoundException {
+        nbt.setShort(name, (short) Item.getIdFromItem(object));
+        return true;
+    }
+
+    @Override
+    public Item read(@Nonnull Registry registry, @Nonnull Set<StoreFor> phase, @Nonnull NBTTagCompound nbt,
+        @Nonnull String name, @Nullable Item object)
+        throws IllegalArgumentException, IllegalAccessException, InstantiationException, NoHandlerFoundException {
+        if (nbt.hasKey(name)) {
+            return Item.getItemById(nbt.getShort(name));
+        }
+        return object;
+    }
 
 }

@@ -1,5 +1,12 @@
 package info.loenwind.autosave.handlers.internal;
 
+import java.util.Set;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import net.minecraft.nbt.NBTTagCompound;
+
 import info.loenwind.autosave.IHandler;
 import info.loenwind.autosave.Registry;
 import info.loenwind.autosave.annotations.Storable;
@@ -8,13 +15,6 @@ import info.loenwind.autosave.annotations.Store.StoreFor;
 import info.loenwind.autosave.engine.StorableEngine;
 import info.loenwind.autosave.exceptions.NoHandlerFoundException;
 import info.loenwind.enderioaddons.common.NullHelper;
-
-import java.util.Set;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import net.minecraft.nbt.NBTTagCompound;
 
 /**
  * An {@link IHandler} that can (re-)store objects by storing their fields. The
@@ -35,31 +35,32 @@ import net.minecraft.nbt.NBTTagCompound;
  */
 public class HandleStorable<T extends Object> implements IHandler<T> {
 
-  public HandleStorable() {
-  }
+    public HandleStorable() {}
 
-  @Override
-  public boolean canHandle(Class<?> clazz) {
-    Storable annotation = clazz.getAnnotation(info.loenwind.autosave.annotations.Storable.class);
-    return annotation != null && annotation.handler() == this.getClass();
-  }
-
-  @Override
-  public boolean store(@Nonnull Registry registry, @Nonnull Set<StoreFor> phase, @Nonnull NBTTagCompound nbt, @Nonnull String name, @Nonnull T object)
-      throws IllegalArgumentException, IllegalAccessException, InstantiationException, NoHandlerFoundException {
-    NBTTagCompound tag = new NBTTagCompound();
-    StorableEngine.store(registry, phase, tag, object);
-    nbt.setTag(name, tag);
-    return true;
-  }
-
-  @Override
-  public T read(@Nonnull Registry registry, @Nonnull Set<StoreFor> phase, @Nonnull NBTTagCompound nbt, @Nonnull String name, @Nullable T object)
-      throws IllegalArgumentException, IllegalAccessException, InstantiationException, NoHandlerFoundException {
-    if (nbt.hasKey(name) && object != null) {
-      NBTTagCompound tag = NullHelper.notnullM(nbt.getCompoundTag(name), "NBTTagCompound.getCompoundTag()");
-      StorableEngine.read(registry, phase, tag, object);
+    @Override
+    public boolean canHandle(Class<?> clazz) {
+        Storable annotation = clazz.getAnnotation(info.loenwind.autosave.annotations.Storable.class);
+        return annotation != null && annotation.handler() == this.getClass();
     }
-    return object;
-  }
+
+    @Override
+    public boolean store(@Nonnull Registry registry, @Nonnull Set<StoreFor> phase, @Nonnull NBTTagCompound nbt,
+        @Nonnull String name, @Nonnull T object)
+        throws IllegalArgumentException, IllegalAccessException, InstantiationException, NoHandlerFoundException {
+        NBTTagCompound tag = new NBTTagCompound();
+        StorableEngine.store(registry, phase, tag, object);
+        nbt.setTag(name, tag);
+        return true;
+    }
+
+    @Override
+    public T read(@Nonnull Registry registry, @Nonnull Set<StoreFor> phase, @Nonnull NBTTagCompound nbt,
+        @Nonnull String name, @Nullable T object)
+        throws IllegalArgumentException, IllegalAccessException, InstantiationException, NoHandlerFoundException {
+        if (nbt.hasKey(name) && object != null) {
+            NBTTagCompound tag = NullHelper.notnullM(nbt.getCompoundTag(name), "NBTTagCompound.getCompoundTag()");
+            StorableEngine.read(registry, phase, tag, object);
+        }
+        return object;
+    }
 }

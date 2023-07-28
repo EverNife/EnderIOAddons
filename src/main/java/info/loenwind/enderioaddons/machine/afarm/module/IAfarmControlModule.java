@@ -40,9 +40,9 @@ import info.loenwind.enderioaddons.machine.afarm.WorkTile;
  */
 public interface IAfarmControlModule {
 
-  void doWork(WorkTile workTile);
+    void doWork(WorkTile workTile);
 
-  int getPriority();
+    int getPriority();
 
-  boolean isCompatibleWith(IAfarmControlModule other);
+    boolean isCompatibleWith(IAfarmControlModule other);
 }

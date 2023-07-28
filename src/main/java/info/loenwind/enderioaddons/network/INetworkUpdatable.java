@@ -2,12 +2,12 @@ package info.loenwind.enderioaddons.network;
 
 public interface INetworkUpdatable {
 
-  void networkUpdate(int id, int data);
+    void networkUpdate(int id, int data);
 
-  int getNetworkUpdate(int id);
+    int getNetworkUpdate(int id);
 
-  int getNetworkUpdateCount();
+    int getNetworkUpdateCount();
 
-  int getNetworkUpdateCheckInterval();
+    int getNetworkUpdateCheckInterval();
 
 }

@@ -11,29 +11,28 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class Stash {
 
-  @Nonnull
-  private final Map<String, Double> contents = new HashMap<String, Double>();
+    @Nonnull
+    private final Map<String, Double> contents = new HashMap<String, Double>();
 
-  public Stash() {
-  }
+    public Stash() {}
 
-  @Nonnull
-  public Map<String, Double> getContents() {
-    return contents;
-  }
-
-  public void readFromNbt(NBTTagCompound nbtRoot) {
-    contents.clear();
-    Set<String> keySet = nbtRoot.func_150296_c();
-    for (String key : keySet) {
-      contents.put(key, nbtRoot.getDouble(key));
+    @Nonnull
+    public Map<String, Double> getContents() {
+        return contents;
     }
-  }
 
-  public void writeToNbt(NBTTagCompound nbtRoot) {
-    for (Entry<String, Double> entry : contents.entrySet()) {
-      nbtRoot.setDouble(entry.getKey(), entry.getValue());
+    public void readFromNbt(NBTTagCompound nbtRoot) {
+        contents.clear();
+        Set<String> keySet = nbtRoot.func_150296_c();
+        for (String key : keySet) {
+            contents.put(key, nbtRoot.getDouble(key));
+        }
     }
-  }
+
+    public void writeToNbt(NBTTagCompound nbtRoot) {
+        for (Entry<String, Double> entry : contents.entrySet()) {
+            nbtRoot.setDouble(entry.getKey(), entry.getValue());
+        }
+    }
 
 }
