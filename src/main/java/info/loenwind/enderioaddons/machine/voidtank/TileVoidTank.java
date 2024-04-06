@@ -315,6 +315,7 @@ public class TileVoidTank extends TileEnderIOAddons implements IFluidHandler, IT
             case BASIC_CAPACITOR:
                 setCapacitor(
                     new BasicCapacitor(
+                        getCapacitorType().capacitor.getTier(),
                         Config.voidTankContinuousEnergyUseRF1.getInt() * 10,
                         100000,
                         Config.voidTankContinuousEnergyUseRF1.getInt()));
@@ -322,6 +323,7 @@ public class TileVoidTank extends TileEnderIOAddons implements IFluidHandler, IT
             case ACTIVATED_CAPACITOR:
                 setCapacitor(
                     new BasicCapacitor(
+                        getCapacitorType().capacitor.getTier(),
                         Config.voidTankContinuousEnergyUseRF2.getInt() * 5,
                         500000,
                         Config.voidTankContinuousEnergyUseRF2.getInt()));
@@ -329,6 +331,7 @@ public class TileVoidTank extends TileEnderIOAddons implements IFluidHandler, IT
             case ENDER_CAPACITOR:
                 setCapacitor(
                     new BasicCapacitor(
+                        getCapacitorType().capacitor.getTier(),
                         Config.voidTankContinuousEnergyUseRF3.getInt() * 2,
                         1000000,
                         Config.voidTankContinuousEnergyUseRF3.getInt()));

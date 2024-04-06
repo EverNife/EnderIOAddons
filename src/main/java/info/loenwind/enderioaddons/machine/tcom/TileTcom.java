@@ -111,7 +111,7 @@ public class TileTcom extends AbstractTileFramework implements IFrameworkMachine
      * such things as stacking the item because it is just a way to get rid of
      * something that shouldn't have existed in the first place. Make sure to
      * remove the item from wherever it was afterwards.
-     * 
+     *
      * Save to be called with null.
      */
     private void takeCareOfStrayItem(@Nullable ItemStack item) {
@@ -359,6 +359,7 @@ public class TileTcom extends AbstractTileFramework implements IFrameworkMachine
     public void onCapacitorTypeChange() {
         setCapacitor(
             new BasicCapacitor(
+                getCapacitorType().capacitor.getTier(),
                 Config.tcomPowerIntakePerTick.getInt(),
                 10000,
                 Config.tcomEnchantingPowerPerTick.getInt() + Config.tcomRecyclingPowerPerTick.getInt()));

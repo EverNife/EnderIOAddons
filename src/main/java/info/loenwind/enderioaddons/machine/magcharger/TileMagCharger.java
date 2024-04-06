@@ -174,6 +174,7 @@ public class TileMagCharger extends AbstractTileFramework implements INetworkUpd
             case BASIC_CAPACITOR:
                 setCapacitor(
                     new BasicCapacitor(
+                        getCapacitorType().capacitor.getTier(),
                         Config.magcPowerIntakePerTick.getInt(),
                         10000,
                         Config.magcMagnetizingPowerPerTick.getInt()));
@@ -181,6 +182,7 @@ public class TileMagCharger extends AbstractTileFramework implements INetworkUpd
             case ACTIVATED_CAPACITOR:
                 setCapacitor(
                     new BasicCapacitor(
+                        getCapacitorType().capacitor.getTier(),
                         Config.magcPowerIntakePerTick.getInt() * 2,
                         10000,
                         Config.magcMagnetizingPowerPerTick.getInt()));
@@ -188,6 +190,7 @@ public class TileMagCharger extends AbstractTileFramework implements INetworkUpd
             case ENDER_CAPACITOR:
                 setCapacitor(
                     new BasicCapacitor(
+                        getCapacitorType().capacitor.getTier(),
                         Config.magcPowerIntakePerTick.getInt() * 8,
                         10000,
                         Config.magcMagnetizingPowerPerTick.getInt()));

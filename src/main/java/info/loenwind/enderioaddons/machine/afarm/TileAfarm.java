@@ -398,13 +398,13 @@ public class TileAfarm extends TileEnderIOAddons implements INetworkUpdatable {
         int ppt = calcPowerUsePerTick();
         switch (getCapacitorType()) {
             case BASIC_CAPACITOR:
-                setCapacitor(new BasicCapacitor(ppt * 15, 25000, ppt));
+                setCapacitor(new BasicCapacitor(getCapacitorType().capacitor.getTier(),ppt * 15, 25000, ppt));
                 break;
             case ACTIVATED_CAPACITOR:
-                setCapacitor(new BasicCapacitor(ppt * 50, 50000, ppt));
+                setCapacitor(new BasicCapacitor(getCapacitorType().capacitor.getTier(),ppt * 50, 50000, ppt));
                 break;
             case ENDER_CAPACITOR:
-                setCapacitor(new BasicCapacitor(ppt * 100, 100000, ppt));
+                setCapacitor(new BasicCapacitor(getCapacitorType().capacitor.getTier(),ppt * 100, 100000, ppt));
                 break;
         }
         currentTask = createTask(null);

@@ -375,6 +375,7 @@ public class TileDrain extends TileEnderIOAddons
             case BASIC_CAPACITOR:
                 setCapacitor(
                     new BasicCapacitor(
+                        getCapacitorType().capacitor.getTier(),
                         Config.drainContinuousEnergyUseRF.getInt() * 40,
                         250000,
                         Config.drainContinuousEnergyUseRF.getInt()));
@@ -382,6 +383,7 @@ public class TileDrain extends TileEnderIOAddons
             case ACTIVATED_CAPACITOR:
                 setCapacitor(
                     new BasicCapacitor(
+                        getCapacitorType().capacitor.getTier(),
                         Config.drainContinuousEnergyUseRF.getInt() * 40,
                         500000,
                         Config.drainContinuousEnergyUseRF.getInt()));
@@ -389,6 +391,7 @@ public class TileDrain extends TileEnderIOAddons
             case ENDER_CAPACITOR:
                 setCapacitor(
                     new BasicCapacitor(
+                        getCapacitorType().capacitor.getTier(),
                         Config.drainContinuousEnergyUseRF.getInt() * 40,
                         1000000,
                         Config.drainContinuousEnergyUseRF.getInt()));

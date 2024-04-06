@@ -520,6 +520,7 @@ public class TileCobbleworks extends AbstractTileFramework implements IFramework
             case BASIC_CAPACITOR:
                 setCapacitor(
                     new BasicCapacitor(
+                        getCapacitorType().capacitor.getTier(),
                         crazypants.enderio.config.Config.powerConduitTierOneRF,
                         100000,
                         crazypants.enderio.config.Config.powerConduitTierOneRF));
@@ -527,6 +528,7 @@ public class TileCobbleworks extends AbstractTileFramework implements IFramework
             case ACTIVATED_CAPACITOR:
                 setCapacitor(
                     new BasicCapacitor(
+                        getCapacitorType().capacitor.getTier(),
                         crazypants.enderio.config.Config.powerConduitTierTwoRF,
                         200000,
                         crazypants.enderio.config.Config.powerConduitTierTwoRF));
@@ -534,6 +536,7 @@ public class TileCobbleworks extends AbstractTileFramework implements IFramework
             case ENDER_CAPACITOR:
                 setCapacitor(
                     new BasicCapacitor(
+                        getCapacitorType().capacitor.getTier(),
                         crazypants.enderio.config.Config.powerConduitTierThreeRF,
                         500000,
                         crazypants.enderio.config.Config.powerConduitTierThreeRF));

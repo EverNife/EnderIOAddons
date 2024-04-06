@@ -144,7 +144,7 @@ public class TileIHopper extends AbstractTileFramework implements IFrameworkMach
 
     /**
      * Check if the an input slot satisfies its ghost slot.
-     * 
+     *
      * @param slot
      *             The slot to check (1..6)
      * @return true if the input slots satisfies the requirement, false otherwise.
@@ -159,7 +159,7 @@ public class TileIHopper extends AbstractTileFramework implements IFrameworkMach
 
     /**
      * Check if the a ghost slot is active.
-     * 
+     *
      * @param slot
      *             The slot to check (1..6)
      * @return true if the ghost slots is filled, false otherwise.
@@ -171,7 +171,7 @@ public class TileIHopper extends AbstractTileFramework implements IFrameworkMach
 
     /**
      * Check if the an output slot can take an operation's output.
-     * 
+     *
      * @param slot
      *             The slot to check (1..6)
      * @return true if the output slots has space, false otherwise.
@@ -298,13 +298,13 @@ public class TileIHopper extends AbstractTileFramework implements IFrameworkMach
         int powerPerTick = powerPerOps / tickSpeedFromCap();
         switch (getCapacitorType()) {
             case BASIC_CAPACITOR:
-                setCapacitor(new BasicCapacitor(powerConduitTierOneRF, 100000, powerPerTick));
+                setCapacitor(new BasicCapacitor(getCapacitorType().capacitor.getTier(), powerConduitTierOneRF, 100000, powerPerTick));
                 break;
             case ACTIVATED_CAPACITOR:
-                setCapacitor(new BasicCapacitor(powerConduitTierTwoRF, 200000, powerPerTick));
+                setCapacitor(new BasicCapacitor(getCapacitorType().capacitor.getTier(), powerConduitTierTwoRF, 200000, powerPerTick));
                 break;
             case ENDER_CAPACITOR:
-                setCapacitor(new BasicCapacitor(powerConduitTierThreeRF, 500000, powerPerTick));
+                setCapacitor(new BasicCapacitor(getCapacitorType().capacitor.getTier(), powerConduitTierThreeRF, 500000, powerPerTick));
                 break;
         }
     }

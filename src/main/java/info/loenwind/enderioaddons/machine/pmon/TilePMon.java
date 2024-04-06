@@ -138,7 +138,7 @@ public class TilePMon extends TileEnderIOAddons {
 
     @Override
     public void onCapacitorTypeChange() {
-        setCapacitor(new BasicCapacitor(100, 10000, 10));
+        setCapacitor(new BasicCapacitor(getCapacitorType().capacitor.getTier(),100, 10000, 10));
         currentTask = createTask(null);
     }
 

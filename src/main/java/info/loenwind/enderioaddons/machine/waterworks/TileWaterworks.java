@@ -110,6 +110,7 @@ public class TileWaterworks extends TileEnderIOAddons implements IFrameworkMachi
             case BASIC_CAPACITOR:
                 setCapacitor(
                     new BasicCapacitor(
+                        getCapacitorType().capacitor.getTier(),
                         Config.waterWorksRFinPerTick1.getInt(),
                         100000,
                         Config.waterWorksRFusePerTick1.getInt()));
@@ -117,6 +118,7 @@ public class TileWaterworks extends TileEnderIOAddons implements IFrameworkMachi
             case ACTIVATED_CAPACITOR:
                 setCapacitor(
                     new BasicCapacitor(
+                        getCapacitorType().capacitor.getTier(),
                         Config.waterWorksRFinPerTick2.getInt(),
                         200000,
                         Config.waterWorksRFusePerTick2.getInt()));
@@ -124,6 +126,7 @@ public class TileWaterworks extends TileEnderIOAddons implements IFrameworkMachi
             case ENDER_CAPACITOR:
                 setCapacitor(
                     new BasicCapacitor(
+                        getCapacitorType().capacitor.getTier(),
                         Config.waterWorksRFinPerTick3.getInt(),
                         500000,
                         Config.waterWorksRFusePerTick3.getInt()));

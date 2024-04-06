@@ -370,6 +370,7 @@ public class TileNiard extends TileEnderIOAddons implements IFluidHandler, ITank
             case BASIC_CAPACITOR:
                 setCapacitor(
                     new BasicCapacitor(
+                        getCapacitorType().capacitor.getTier(),
                         Config.niardContinuousEnergyUseRF.getInt() * 40,
                         250000,
                         Config.niardContinuousEnergyUseRF.getInt()));
@@ -377,6 +378,7 @@ public class TileNiard extends TileEnderIOAddons implements IFluidHandler, ITank
             case ACTIVATED_CAPACITOR:
                 setCapacitor(
                     new BasicCapacitor(
+                        getCapacitorType().capacitor.getTier(),
                         Config.niardContinuousEnergyUseRF.getInt() * 40,
                         500000,
                         Config.niardContinuousEnergyUseRF.getInt()));
@@ -384,6 +386,7 @@ public class TileNiard extends TileEnderIOAddons implements IFluidHandler, ITank
             case ENDER_CAPACITOR:
                 setCapacitor(
                     new BasicCapacitor(
+                        getCapacitorType().capacitor.getTier(),
                         Config.niardContinuousEnergyUseRF.getInt() * 40,
                         1000000,
                         Config.niardContinuousEnergyUseRF.getInt()));
